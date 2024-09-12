@@ -3,10 +3,14 @@ import 'package:e_commerce/ui/view/auth/register/register_screen.dart';
 import 'package:e_commerce/ui/view/home.dart';
 import 'package:e_commerce/ui/view/splash.dart';
 import 'package:e_commerce/ui/view/utils/app_theme.dart';
+import 'package:e_commerce/ui/view/utils/bloc_observer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
 }
 
