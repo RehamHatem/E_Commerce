@@ -5,7 +5,7 @@ import 'package:e_commerce/domain/entity/failures.dart';
 import 'package:e_commerce/domain/repo/data_source/auth_data_source.dart';
 
 class AuthDataSourceImpl implements AuthDataSource{
-  ApiManeger apiManeger;
+  var apiManeger = ApiManeger.instance();
   AuthDataSourceImpl(this.apiManeger);
   @override
   Future<Either<Failures, AuthEntity>> register(String name, String phone, String password, String email, String confirmPass) async {
@@ -17,6 +17,18 @@ class AuthDataSourceImpl implements AuthDataSource{
      return right(r.toAuthEntity());
 
    },);
+  }
+
+  @override
+  Future<Either<Failures, AuthEntity>> login(String email, String password) async{
+    var either= await apiManeger.login(email, password);
+    return either.fold((l) {
+      return left(l);
+
+    }, (r) {
+      return right(r.toAuthEntity());
+
+    },);
   }
   
 }

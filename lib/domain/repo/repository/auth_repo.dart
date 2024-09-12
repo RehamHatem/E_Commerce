@@ -5,5 +5,6 @@ import '../../entity/failures.dart';
 
 abstract class AuthRepository{
   Future<Either<Failures,AuthEntity>>register(String name,String phone,String password , String email , String confirmPass);
+  Future<Either<Failures,AuthEntity>>login(String email,String password);
 
 }

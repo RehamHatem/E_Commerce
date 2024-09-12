@@ -21,4 +21,14 @@ class AuthRepositoryImpl implements AuthRepository{
     },);
   }
 
+  @override
+  Future<Either<Failures, AuthEntity>> login(String email, String password) async {
+    var either= await dataSource.login(email, password);
+    return either.fold((l) {
+      return left(l);
+    }, (r) {
+      return right(r);
+    },);
+  }
+
 }
