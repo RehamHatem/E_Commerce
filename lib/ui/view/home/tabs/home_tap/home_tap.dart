@@ -18,7 +18,7 @@ HomeTapViewModel homeTapViewModel=HomeTapViewModel(homeTapUseCases: injectHomeTa
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeTapViewModel,HomeScreenStates>(
-      bloc:homeTapViewModel..getCtegories() ,
+      bloc:homeTapViewModel..getCtegories()..getBrands() ,
       builder: (context, state) {
        return SafeArea(
           child: Padding(
@@ -59,7 +59,11 @@ HomeTapViewModel homeTapViewModel=HomeTapViewModel(homeTapUseCases: injectHomeTa
                   SizedBox(
                     height: 24.h,
                   ),
-                  // CategoriesOrBrandsSection(),
+                  state is CatLoadingState ? Center(child: CircularProgressIndicator(),):
+                  CategoriesOrBrandsSection(dataEntity: homeTapViewModel.brandList,),
+                  SizedBox(
+                    height: 24.h,
+                  ),
                 ],
               ),
             ),

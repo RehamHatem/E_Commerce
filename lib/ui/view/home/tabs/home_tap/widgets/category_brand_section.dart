@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../../domain/entity/home_tap/category_entity.dart';
+import '../../../../../../domain/entity/home_tap/category_brands_entity.dart';
 import 'category_brand_item.dart';
 
 class CategoriesOrBrandsSection extends StatelessWidget {
   //todo: List<Category & brand>
-  List <DataEntity>dataEntity;
+  List <DataCategoryBrandsEntity>dataEntity;
   CategoriesOrBrandsSection({required this.dataEntity});
   @override
   Widget build(BuildContext context) {

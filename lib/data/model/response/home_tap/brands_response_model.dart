@@ -1,15 +1,14 @@
 import 'package:e_commerce/domain/entity/home_tap/category_brands_entity.dart';
 
-class CategoryResponseModel extends CategoryBrandsEntity {
-  CategoryResponseModel({
-      super.data,
-    super.results,
+class BrandsResponseModel extends CategoryBrandsEntity{
+  BrandsResponseModel({
+      super.results,
       this.metadata,
     this.message,
     this.statusmessage,
-      });
+    super.data,});
 
-  CategoryResponseModel.fromJson(dynamic json) {
+  BrandsResponseModel.fromJson(dynamic json) {
     results = json['results'];
     message = json['message'];
     statusmessage = json['statusMsg'];
@@ -23,6 +22,7 @@ class CategoryResponseModel extends CategoryBrandsEntity {
   }
 
   Metadata? metadata;
+
   String? message;
   String? statusmessage;
 
@@ -32,10 +32,10 @@ class CategoryResponseModel extends CategoryBrandsEntity {
 
 class Data extends DataCategoryBrandsEntity {
   Data({
-      super.id,
-     super.name,
-     super.slug,
-     super.image,
+     super.id,
+    super.name,
+      super.slug,
+      super.image,
       this.createdAt, 
       this.updatedAt,});
 
@@ -68,22 +68,26 @@ class Metadata {
   Metadata({
       this.currentPage, 
       this.numberOfPages, 
-      this.limit,});
+      this.limit, 
+      this.nextPage,});
 
   Metadata.fromJson(dynamic json) {
     currentPage = json['currentPage'];
     numberOfPages = json['numberOfPages'];
     limit = json['limit'];
+    nextPage = json['nextPage'];
   }
   int? currentPage;
   int? numberOfPages;
   int? limit;
+  int? nextPage;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['currentPage'] = currentPage;
     map['numberOfPages'] = numberOfPages;
     map['limit'] = limit;
+    map['nextPage'] = nextPage;
     return map;
   }
 

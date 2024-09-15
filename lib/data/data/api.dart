@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:e_commerce/data/model/request/Login_request_model.dart';
 import 'package:e_commerce/data/model/request/Register_request_model.dart';
 import 'package:e_commerce/data/model/response/auth/Register_response_model.dart';
+import 'package:e_commerce/data/model/response/home_tap/brands_response_model.dart';
 import 'package:e_commerce/data/model/response/home_tap/category_response_model.dart';
 import 'package:e_commerce/domain/entity/failures.dart';
 import 'package:http/http.dart' as http;
@@ -105,5 +106,25 @@ Future<Either<Failures,CategoryResponseModel>> getCategories() async{
     }else{
       return left (NetworkError(errorMessage: "check your internet" ));
     }
+}
+//https://ecommerce.routemisr.com/api/v1/brands
+Future<Either<Failures,BrandsResponseModel>>getBrands() async{
+    Uri url=Uri.https("ecommerce.routemisr.com","/api/v1/brands");
+    var response= await http.get(url);
+    var json=jsonDecode(response.body);
+    var brands=BrandsResponseModel.fromJson(json);
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult != ConnectivityResult.mobile ||
+        connectivityResult !=  ConnectivityResult.wifi) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        print(response.body);
+        return right(brands);
+      }else {
+        return left(ServerError(errorMessage: brands.message));
+      }
+    }else{
+      return left (NetworkError(errorMessage: "check your internet" ));
+    }
+
 }
 }

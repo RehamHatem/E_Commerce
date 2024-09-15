@@ -1,4 +1,4 @@
-import 'package:e_commerce/domain/entity/home_tap/category_entity.dart';
+import 'package:e_commerce/domain/entity/home_tap/category_brands_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -6,7 +6,7 @@ import '../../../../utils/app_color.dart';
 
 class CategoryOrBrandItem extends StatelessWidget {
   //todo: categoryOrBrand model
-  DataEntity dataEntity;
+  DataCategoryBrandsEntity dataEntity;
   CategoryOrBrandItem({required this.dataEntity});
 
   @override
