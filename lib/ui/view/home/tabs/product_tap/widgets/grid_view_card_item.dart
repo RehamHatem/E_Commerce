@@ -14,7 +14,7 @@ class GridViewCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 191.w,
-      height: 237.h,
+      height: 300.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.r),
         border: Border.all(
@@ -31,7 +31,7 @@ class GridViewCardItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.r),
                 child: Image.network(
                   dataEntity.imageCover??"",
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                   width: 191.w,
                   height: 128.h,
                 ),
@@ -63,7 +63,7 @@ class GridViewCardItem extends StatelessWidget {
             padding: EdgeInsets.only(left: 8.w),
             child: Text(
               dataEntity.title??"",
-              maxLines: 2,
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                 fontSize: 14.sp,
@@ -80,8 +80,9 @@ class GridViewCardItem extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  dataEntity.price.toString()??"",
+                  dataEntity.price.toString()+" EGP",
                   maxLines: 1,
+
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     fontSize: 14.sp,
                     color: AppColors.darkPrimaryColor,
@@ -101,33 +102,39 @@ class GridViewCardItem extends StatelessWidget {
             padding: EdgeInsets.only(left: 8.0.w, right: 8.w),
             child: Row(
               children: [
-                Text(
-                  dataEntity.description??"",
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    fontSize: 14.sp,
-                    color: AppColors.darkPrimaryColor,
-                    fontWeight: FontWeight.w500,
+                Expanded(
+                  flex:2,
+                  child: Text(
+                    dataEntity.description??"",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      fontSize: 14.sp,
+                      color: AppColors.darkPrimaryColor,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
-                SizedBox(
-                  width: 7.w,
-                ),
-                Image.asset(
-                  MyAssets.fav,
-                ),
-                const Spacer(
-                  flex: 1,
-                ),
-                InkWell(
-                  onTap: () {
-                    //todo: add to cart
-                  },
-                  splashColor: Colors.transparent,
-                  child: Icon(
-                    Icons.add_circle,
-                    size: 32.sp,
-                    color: AppColors.primaryColor,
+                // SizedBox(
+                //   width: 7.w,
+                // ),
+                // Image.asset(
+                //   MyAssets.fav,
+                // ),
+                // const Spacer(
+                //   flex: 1,
+                // ),
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      //todo: add to cart
+                    },
+                    splashColor: Colors.transparent,
+                    child: Icon(
+                      Icons.add_circle,
+                      size: 32.sp,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
                 )
               ],
