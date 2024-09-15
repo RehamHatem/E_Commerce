@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce/domain/repo/repository/auth_repo.dart';
 
-import '../entity/auth_entity.dart';
+import '../entity/auth/auth_entity.dart';
 import '../entity/failures.dart';
 
 class AuthUseCases{

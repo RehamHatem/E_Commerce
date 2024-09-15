@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:e_commerce/data/di.dart';
 import 'package:e_commerce/ui/state_manegment/auth/login/login_view_model.dart';
 import 'package:e_commerce/ui/state_manegment/auth/login/states.dart';
+import 'package:e_commerce/ui/view/home/home.dart';
 import 'package:e_commerce/ui/view/utils/dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
         else if(state is SuccessState){
           DialogUtils.hideLoading(context);
           DialogUtils.showMessage(context, state.authEntity!.userEntity!.name!);
+          Navigator.pushReplacementNamed(context, HomeScreenView.routeName);
         }
 
       },

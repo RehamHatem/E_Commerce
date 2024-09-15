@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce/data/repo_impl/data_source/auth_data_source_impl.dart';
 
-import 'package:e_commerce/domain/entity/auth_entity.dart';
+import 'package:e_commerce/domain/entity/auth/auth_entity.dart';
 
 import 'package:e_commerce/domain/entity/failures.dart';
 import 'package:e_commerce/domain/repo/data_source/auth_data_source.dart';

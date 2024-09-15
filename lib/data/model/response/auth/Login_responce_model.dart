@@ -1,5 +1,5 @@
-import 'package:e_commerce/data/model/response/PhoneError.dart';
-import 'package:e_commerce/domain/entity/auth_entity.dart';
+import 'package:e_commerce/data/model/response/auth/PhoneError.dart';
+import 'package:e_commerce/domain/entity/auth/auth_entity.dart';
 
 import 'User_model.dart';
 

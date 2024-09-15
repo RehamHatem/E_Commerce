@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:e_commerce/domain/entity/auth_entity.dart';
+import 'package:e_commerce/domain/entity/auth/auth_entity.dart';
 import 'package:e_commerce/domain/entity/failures.dart';
 
 abstract class AuthDataSource {

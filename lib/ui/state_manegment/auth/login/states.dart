@@ -1,4 +1,4 @@
- import 'package:e_commerce/domain/entity/auth_entity.dart';
+ import 'package:e_commerce/domain/entity/auth/auth_entity.dart';
 
 abstract class LoginStates{
 

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../data/di.dart';
 import '../../../state_manegment/auth/register/register_states.dart';
 import '../../../state_manegment/auth/register/register_view_model.dart';
+import '../../home/home.dart';
 import '../../utils/app_color.dart';
 import '../../utils/text_field_item.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,6 +33,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         else if(state is SuccessState){
           DialogUtils.hideLoading(context);
           DialogUtils.showMessage(context, state.authEntity.userEntity!.name!);
+          Navigator.pushReplacementNamed(context, HomeScreenView.routeName);
+
         }
 
         },

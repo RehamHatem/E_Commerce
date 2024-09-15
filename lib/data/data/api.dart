@@ -3,12 +3,13 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce/data/model/request/Login_request_model.dart';
 import 'package:e_commerce/data/model/request/Register_request_model.dart';
-import 'package:e_commerce/data/model/response/Register_response_model.dart';
+import 'package:e_commerce/data/model/response/auth/Register_response_model.dart';
+import 'package:e_commerce/data/model/response/home_tap/category_response_model.dart';
 import 'package:e_commerce/domain/entity/failures.dart';
 import 'package:http/http.dart' as http;
 import 'package:connectivity_plus/connectivity_plus.dart';
 
-import '../model/response/Login_responce_model.dart';
+import '../model/response/auth/Login_responce_model.dart';
 class ApiManeger{
 
   // singilton design pattern
@@ -81,4 +82,28 @@ class ApiManeger{
       return left(NetworkError(errorMessage: "check your internet connection"));
     }
   }
+
+
+  //https://ecommerce.routemisr.com/api/v1/categories
+
+Future<Either<Failures,CategoryResponseModel>> getCategories() async{
+
+    Uri url=Uri.https("ecommerce.routemisr.com","/api/v1/categories");
+    var response= await http.get(url);
+    var json=jsonDecode(response.body);
+    CategoryResponseModel categoryResponseModel=CategoryResponseModel.fromJson(json);
+    var connectivityResult = await Connectivity().checkConnectivity();
+
+    if (connectivityResult != ConnectivityResult.mobile ||
+        connectivityResult !=  ConnectivityResult.wifi) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        print(response.body);
+        return right(categoryResponseModel);
+      }else {
+        return left(ServerError(errorMessage: categoryResponseModel.message));
+      }
+    }else{
+      return left (NetworkError(errorMessage: "check your internet" ));
+    }
+}
 }

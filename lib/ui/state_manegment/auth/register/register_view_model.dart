@@ -4,7 +4,7 @@ import 'package:e_commerce/ui/state_manegment/auth/register/register_states.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../domain/entity/auth_entity.dart';
+import '../../../../domain/entity/auth/auth_entity.dart';
 import '../../../../domain/entity/failures.dart';
 
 class RegisterViewModel extends Cubit<RegisterStates>{
