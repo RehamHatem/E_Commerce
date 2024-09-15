@@ -1,5 +1,5 @@
-import 'package:e_commerce/ui/state_manegment/home/home_screen_states.dart';
-import 'package:e_commerce/ui/state_manegment/home/home_tap_view_model.dart';
+import 'package:e_commerce/ui/state_manegment/home/home_tap/home_screen_states.dart';
+import 'package:e_commerce/ui/state_manegment/home/home_tap/home_tap_view_model.dart';
 import 'package:e_commerce/ui/view/home/tabs/home_tap/widgets/announcemet_section.dart';
 import 'package:e_commerce/ui/view/home/tabs/home_tap/widgets/category_brand_section.dart';
 import 'package:e_commerce/ui/view/home/tabs/home_tap/widgets/custom_search_with_shopping_cart.dart';

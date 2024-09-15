@@ -1,8 +1,8 @@
-import 'package:e_commerce/ui/state_manegment/home/home_screen_states.dart';
+import 'package:e_commerce/ui/state_manegment/home/home_tap/home_screen_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../domain/entity/home_tap/category_brands_entity.dart';
-import '../../../domain/usecase/home_tap_use_cases.dart';
+import '../../../../domain/entity/home_tap/category_brands_entity.dart';
+import '../../../../domain/usecase/home_tap_use_cases.dart';
 
 class HomeTapViewModel extends Cubit<HomeScreenStates>{
   HomeTapViewModel({required this .homeTapUseCases}):super(InitState());

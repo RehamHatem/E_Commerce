@@ -14,5 +14,5 @@ class MyAssets {
   static const String img2="assets/images/img2 (2).png";
   static const String img3="assets/images/img3.png";
   static const String shoppingCart="assets/icons/🦆 icon _shopping cart_.png";
-  static const String logo="assets/icons/route.png";
+  static const String logo="assets/icons/logo.png";
 }

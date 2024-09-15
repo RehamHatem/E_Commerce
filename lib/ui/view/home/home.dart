@@ -1,5 +1,5 @@
-import 'package:e_commerce/ui/state_manegment/home/home_screen_states.dart';
-import 'package:e_commerce/ui/state_manegment/home/home_screen_view_model.dart';
+import 'package:e_commerce/ui/state_manegment/home/home_tap/home_screen_states.dart';
+import 'package:e_commerce/ui/state_manegment/home/home_tap/home_screen_view_model.dart';
 
 import 'package:e_commerce/ui/view/home/widgets/custom_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
