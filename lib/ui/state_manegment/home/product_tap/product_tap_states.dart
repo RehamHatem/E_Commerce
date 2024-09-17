@@ -1,4 +1,5 @@
 import 'package:e_commerce/domain/entity/failures.dart';
+import 'package:e_commerce/domain/entity/product_tap/add_to_cart_entity.dart';
 import 'package:e_commerce/domain/entity/product_tap/product_entity.dart';
 
 abstract class ProductTapStates {
@@ -16,4 +17,16 @@ class ProductTapErrorState extends ProductTapStates{
 class ProductTapSuccesState extends ProductTapStates{
   ProductEntity productEntity;
   ProductTapSuccesState({required this.productEntity});
+}
+class AddToCartLoadingState extends ProductTapStates{
+  String? load;
+  AddToCartLoadingState({required this.load});
+}
+class AddToCartErrorState extends ProductTapStates{
+  Failures? error;
+  AddToCartErrorState({required this.error});
+}
+class AddToCartSuccessState extends ProductTapStates{
+  AddToCartEntity addToCartEntity;
+  AddToCartSuccessState({required this.addToCartEntity});
 }

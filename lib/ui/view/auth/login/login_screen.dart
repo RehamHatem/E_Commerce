@@ -7,7 +7,9 @@ import 'package:e_commerce/ui/view/home/home.dart';
 import 'package:e_commerce/ui/view/utils/dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils/app_color.dart';
+import '../../utils/shared_preference.dart';
 import '../../utils/text_field_item.dart';
 import '../register/register_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,27 +22,26 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  LoginViewModel loginViewModel=LoginViewModel(authUseCases: injectUseCase());
-  @override
+  LoginViewModel loginViewModel = LoginViewModel(authUseCases: injectUseCase());
 
+  @override
   @override
   Widget build(BuildContext context) {
     return BlocListener(
       bloc: loginViewModel,
       listener: (context, state) {
-        if(state is LoadingState){
+        if (state is LoadingState) {
           DialogUtils.showLoading(context, "loading");
-        }
-        else if(state is ErrorState){
+        } else if (state is ErrorState) {
           DialogUtils.hideLoading(context);
           DialogUtils.showMessage(context, state.errorMsg!);
-        }
-        else if(state is SuccessState){
+        } else if (state is SuccessState) {
           DialogUtils.hideLoading(context);
           DialogUtils.showMessage(context, state.authEntity!.userEntity!.name!);
+          SharedPreference.saveData(
+              key: 'Token', value: state.authEntity!.token);
           Navigator.pushReplacementNamed(context, HomeScreenView.routeName);
         }
-
       },
       child: Scaffold(
         body: Container(
@@ -90,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     return 'please enter your email address';
                                   }
                                   bool emailValid = RegExp(
-                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                       .hasMatch(value);
                                   if (!emailValid) {
                                     return 'invalid email';
@@ -149,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               backgroundColor: AppColors.whiteColor,
                               shape: RoundedRectangleBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(15.r)))),
+                                      BorderRadius.all(Radius.circular(15.r)))),
                           child: Container(
                             height: 64.h,
                             width: 398.w,
@@ -160,8 +161,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     .textTheme
                                     .titleLarge!
                                     .copyWith(
-                                    color: AppColors.primaryColor,
-                                    fontSize: 20.sp),
+                                        color: AppColors.primaryColor,
+                                        fontSize: 20.sp),
                               ),
                             ),
                           ),

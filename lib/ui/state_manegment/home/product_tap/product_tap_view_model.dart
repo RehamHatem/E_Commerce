@@ -8,6 +8,7 @@ class ProductTapViewModel extends Cubit<ProductTapStates>{
   ProductTapViewModel({required this.productTapUseCases}):super(ProductTapInitState());
   ProductTapUseCases productTapUseCases;
   List<DataEntity>products=[];
+  int cartCount=0;
   void getProducts() async{
     emit(ProductTapLoadingState(load: "Loading..."));
     var either= await productTapUseCases.getProducts();
@@ -17,8 +18,17 @@ class ProductTapViewModel extends Cubit<ProductTapStates>{
       products=r.data??[];
       emit(ProductTapSuccesState(productEntity: r));
     },);
-
-
+  }
+  void addToCart(String productId)async{
+    emit(AddToCartLoadingState(load: "Loading...."));
+    var either= await productTapUseCases.addToCart(productId);
+    return either.fold((l) {
+      emit(AddToCartErrorState(error: l));
+    }, (r) {
+      cartCount=r.numOfCartItems!.toInt();
+      emit(AddToCartSuccessState(addToCartEntity:r));
+      print(cartCount);
+    },);
   }
 
 }

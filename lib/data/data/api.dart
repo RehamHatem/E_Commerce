@@ -6,8 +6,10 @@ import 'package:e_commerce/data/model/request/Register_request_model.dart';
 import 'package:e_commerce/data/model/response/auth/Register_response_model.dart';
 import 'package:e_commerce/data/model/response/home_tap/brands_response_model.dart';
 import 'package:e_commerce/data/model/response/home_tap/category_response_model.dart';
+import 'package:e_commerce/data/model/response/product_tap/add_to_cart_response_model.dart';
 import 'package:e_commerce/data/model/response/product_tap/prosuct_response_model.dart';
 import 'package:e_commerce/domain/entity/failures.dart';
+import 'package:e_commerce/ui/view/utils/shared_preference.dart';
 import 'package:http/http.dart' as http;
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -153,5 +155,29 @@ Future<Either<Failures,ProductResponseModel>>getProducts() async {
 
 
 
+}
+//https://ecommerce.routemisr.com/api/v1/cart
+Future<Either<Failures,AddToCartResponseModel>>addToCart(String productId)async {
+  Uri url = Uri.https("ecommerce.routemisr.com", "/api/v1/cart");
+  var shared= await SharedPreference.init();
+  var token=SharedPreference.getData(key: 'Token');
+  var response = await http.post(url, body: {'productId': productId},headers: {'token':token.toString()});
+  var json = jsonDecode(response.body);
+  var addToCartResponseModel = AddToCartResponseModel.fromJson(json);
+  var connectivityResult = await Connectivity().checkConnectivity();
+  if (connectivityResult != ConnectivityResult.mobile ||
+      connectivityResult != ConnectivityResult.wifi) {
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return right(addToCartResponseModel);
+    } else if (response.statusCode == 401) {
+      return left(
+          ServerError(errorMessage: addToCartResponseModel.message));
+    }
+    else {
+      return left(ServerError(errorMessage: addToCartResponseModel.message));
+    }
+  }else {
+    return left(NetworkError(errorMessage: "check your internet connection"));
+  }
 }
 }
