@@ -1,4 +1,5 @@
 import 'package:e_commerce/domain/entity/cart/cart_entity.dart';
+import 'package:e_commerce/domain/entity/cart/update_cart_item_count_entity.dart';
 
 import '../../../domain/entity/cart/remove_from_cart_entity.dart';
 import '../../../domain/entity/failures.dart';
@@ -30,5 +31,20 @@ class RemoveErrorCartState extends CartStates{
 class RemoveSuccessCartState extends CartStates{
   RemoveFromCartEntity removeFromCartEntity;
   RemoveSuccessCartState({required this.removeFromCartEntity});
+
+}
+
+
+class UpdateLoadingCartState extends CartStates{
+  String? load;
+  UpdateLoadingCartState({required this.load});
+}
+class UpdateErrorCartState extends CartStates{
+  Failures? error;
+  UpdateErrorCartState({required this.error});
+}
+class UpdateSuccessCartState extends CartStates{
+  UpdateCartItemCountEntity updateCartItemCountEntity;
+  UpdateSuccessCartState({required this.updateCartItemCountEntity});
 
 }

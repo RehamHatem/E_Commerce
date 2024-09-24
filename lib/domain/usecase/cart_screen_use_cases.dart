@@ -4,6 +4,7 @@ import 'package:e_commerce/domain/entity/failures.dart';
 import 'package:e_commerce/domain/repo/repository/cart_screen_repo.dart';
 
 import '../entity/cart/remove_from_cart_entity.dart';
+import '../entity/cart/update_cart_item_count_entity.dart';
 
 class CartScreenUseCases {
   CartScreenRepo cartScreenRepo;
@@ -16,6 +17,10 @@ class CartScreenUseCases {
     return cartScreenRepo.removeFromCart(productId);
 
   }
+  Future<Either<Failures,UpdateCartItemCountEntity>>updateCartItemCount(String productId,int count){
+    return cartScreenRepo.updateCartItemCount(productId, count);
+  }
+
 
 
 }

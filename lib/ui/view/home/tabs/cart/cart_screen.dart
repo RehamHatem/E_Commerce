@@ -55,13 +55,18 @@ class CartScreen extends StatelessWidget {
             body:Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if(state is  InitCartState ||state is RemoveLoadingCartState|| state is LoadingCartState) Center(child: CircularProgressIndicator(),)
+                if(state is  InitCartState ||state is RemoveLoadingCartState||state is UpdateLoadingCartState|| state is LoadingCartState) Center(child: CircularProgressIndicator(),)
                 else if (state is ErrorCartState) Center(child:Text(state.error!.errorMessage!))
                 else if(state is SuccessCartState && cartViewModel.products!=null && cartViewModel.products!.products!=null&& cartViewModel.products!.products!.isNotEmpty)
                 Expanded(
                   child: ListView.builder(
                     itemBuilder: (context, index) {
-                      return CartItem(cartProduct: cartViewModel.products!.products![index] ,itemRemoved:()=> removedItem(cartViewModel.products!.products![index].product!.id ?? "") ,);
+                      return CartItem(cartProduct: cartViewModel.products!.products![index] ,itemRemoved:()=> removedItem(cartViewModel.products!.products![index].product!.id ?? "")
+                        ,addCount:()=> cartViewModel.updateCartItemCount(cartViewModel.products!.products![index].product!.id ?? "", cartViewModel.products!.products![index].count!.toInt() +1) ,
+                        decrementCount:()=>cartViewModel.updateCartItemCount(cartViewModel.products!.products![index].product!.id ?? "",cartViewModel.products!.products![index].count!.toInt()>0? cartViewModel.products!.products![index].count!.toInt() -1:0
+                        )
+
+                        ,);
                     },
                     itemCount: cartViewModel.products!.products!.length,
                   ),

@@ -44,4 +44,17 @@ void removeFromCart(String productId) async{
   },);
 
 }
+
+
+void updateCartItemCount(String productId , int count)async{
+  emit(UpdateLoadingCartState(load: "loading"));
+  var either= await cartScreenUseCases.updateCartItemCount(productId, count);
+  return either.fold((l) {
+    emit(UpdateErrorCartState(error: l));
+  }, (r) {
+    emit(UpdateSuccessCartState(updateCartItemCountEntity: r));
+    cartProducts();
+  },);
+
+}
 }

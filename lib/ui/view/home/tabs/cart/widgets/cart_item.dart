@@ -12,8 +12,10 @@ class CartItem extends StatelessWidget {
   CartProductsEntity cartProduct;
 
     Function() itemRemoved ;
+    Function() addCount ;
+    Function() decrementCount ;
 
-  CartItem({required this.cartProduct,required this.itemRemoved});
+  CartItem({required this.cartProduct,required this.itemRemoved,required this.addCount,required this.decrementCount});
 
   @override
   Widget build(BuildContext context) {
@@ -120,9 +122,10 @@ class CartItem extends StatelessWidget {
                                       padding: EdgeInsets.zero,
                                       onPressed: () {
 
-                                        if(cartProduct.count!=null  && cartProduct.count! > 1){
-                                          cartProduct.count=cartProduct.count!-1;
-                                        }
+                                        // if(cartProduct.count!=null  && cartProduct.count! > 1){
+                                        //   cartProduct.count=cartProduct.count!-1;
+                                        // }
+                                        decrementCount();
 
                                       },
                                       icon: Icon(
@@ -142,9 +145,10 @@ class CartItem extends StatelessWidget {
                                       padding: EdgeInsets.zero,
                                       onPressed: () {
                                         //todo: increment count
-                                        if(cartProduct.count!=null){
-                                          cartProduct.count=cartProduct.count!+1;
-                                        }
+                                        // if(cartProduct.count!=null){
+                                        //   cartProduct.count=cartProduct.count!+1;
+                                        // }
+                                        addCount();
 
                                       },
                                       icon: Icon(
