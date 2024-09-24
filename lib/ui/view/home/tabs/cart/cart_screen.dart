@@ -55,18 +55,17 @@ class CartScreen extends StatelessWidget {
             body:Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                state is LoadingCartState? Center(child: CircularProgressIndicator(),):
-                    state is ErrorCartState? Center(child:Text(state.error!.errorMessage!)):
-                        state is SuccessCartState && cartViewModel.products!=null && cartViewModel.products!.products!=null?
+                if(state is  InitCartState ||state is RemoveLoadingCartState|| state is LoadingCartState) Center(child: CircularProgressIndicator(),)
+                else if (state is ErrorCartState) Center(child:Text(state.error!.errorMessage!))
+                else if(state is SuccessCartState && cartViewModel.products!=null && cartViewModel.products!.products!=null&& cartViewModel.products!.products!.isNotEmpty)
                 Expanded(
                   child: ListView.builder(
                     itemBuilder: (context, index) {
-                      return CartItem(cartProduct: cartViewModel.products!.products![index] ,);
+                      return CartItem(cartProduct: cartViewModel.products!.products![index] ,itemRemoved:()=> removedItem(cartViewModel.products!.products![index].product!.id ?? "") ,);
                     },
                     itemCount: cartViewModel.products!.products!.length,
                   ),
-                )
-                            :Center(child: Text("no products in cart"),),
+                ) else Center(child: Text("no products innnn cart"),),
                 if (state is SuccessCartState && cartViewModel.products!=null)
                 Padding(
                   padding: EdgeInsets.only(bottom: 98.h, left: 16.w, right: 16.w),
@@ -132,5 +131,9 @@ class CartScreen extends StatelessWidget {
       },
 
     );
+  }
+  void removedItem(String productId){
+    print("Removing product with ID: $productId");
+    cartViewModel.removeFromCart(productId);
   }
 }

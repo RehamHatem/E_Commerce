@@ -1,13 +1,20 @@
+
 import 'package:e_commerce/domain/entity/cart/cart_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+
+
 import '../../../../utils/app_color.dart';
-import '../../../../utils/my_assets.dart';
+
 
 class CartItem extends StatelessWidget {
   CartProductsEntity cartProduct;
-  CartItem({required this.cartProduct});
+
+    Function() itemRemoved ;
+
+  CartItem({required this.cartProduct,required this.itemRemoved});
+
   @override
   Widget build(BuildContext context) {
     if(cartProduct.product==null){
@@ -62,7 +69,8 @@ class CartItem extends StatelessWidget {
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  //todo: delete item in cart
+                                  itemRemoved();
+
                                 },
                                 child: Icon(
                                   Icons.delete_outline,
@@ -112,9 +120,9 @@ class CartItem extends StatelessWidget {
                                       padding: EdgeInsets.zero,
                                       onPressed: () {
 
-                                        // if(cartProduct.count!=null  && cartProduct.count! > 1){
-                                        //   cartProduct.count=cartProduct.count!-1;
-                                        // }
+                                        if(cartProduct.count!=null  && cartProduct.count! > 1){
+                                          cartProduct.count=cartProduct.count!-1;
+                                        }
 
                                       },
                                       icon: Icon(
@@ -124,7 +132,7 @@ class CartItem extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      'Count',
+                                      cartProduct.count.toString(),
                                       style: TextStyle(
                                           fontSize: 18.sp,
                                           fontWeight: FontWeight.w500,
@@ -134,9 +142,9 @@ class CartItem extends StatelessWidget {
                                       padding: EdgeInsets.zero,
                                       onPressed: () {
                                         //todo: increment count
-                                        // if(cartProduct.count!=null){
-                                        //   cartProduct.count=cartProduct.count!+1;
-                                        // }
+                                        if(cartProduct.count!=null){
+                                          cartProduct.count=cartProduct.count!+1;
+                                        }
 
                                       },
                                       icon: Icon(
@@ -158,4 +166,5 @@ class CartItem extends StatelessWidget {
       ),
     );
   }
+
 }
