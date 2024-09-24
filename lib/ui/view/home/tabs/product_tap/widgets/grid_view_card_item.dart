@@ -127,7 +127,6 @@ class GridViewCardItem extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     bloc.addToCart(dataEntity.id??"");
-
                     },
                   splashColor: Colors.transparent,
                   child: Icon(

@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../data/di.dart';
 import '../../../utils/app_color.dart';
 import '../../../utils/my_assets.dart';
+import '../cart/cart_screen.dart';
 import '../home_tap/widgets/custom_field.dart';
 
 class ProductListTap extends StatelessWidget {
@@ -48,10 +49,16 @@ class ProductListTap extends StatelessWidget {
                       Badge(
                         label: Text(productTapViewModel.cartCount.toString()),
 
-                        child: ImageIcon(
-                          AssetImage(MyAssets.shoppingCart),
-                          size: 28.sp,
-                          color: AppColors.primaryColor,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, CartScreen.routeName);
+
+                          },
+                          child: ImageIcon(
+                            AssetImage(MyAssets.shoppingCart),
+                            size: 28.sp,
+                            color: AppColors.primaryColor,
+                          ),
                         ),
                       ),
                     ]),

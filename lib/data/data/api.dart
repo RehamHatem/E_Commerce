@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:e_commerce/data/model/request/Login_request_model.dart';
 import 'package:e_commerce/data/model/request/Register_request_model.dart';
 import 'package:e_commerce/data/model/response/auth/Register_response_model.dart';
+import 'package:e_commerce/data/model/response/cart/cart_screen_response_model.dart';
 import 'package:e_commerce/data/model/response/home_tap/brands_response_model.dart';
 import 'package:e_commerce/data/model/response/home_tap/category_response_model.dart';
 import 'package:e_commerce/data/model/response/product_tap/add_to_cart_response_model.dart';
@@ -179,5 +180,30 @@ Future<Either<Failures,AddToCartResponseModel>>addToCart(String productId)async 
   }else {
     return left(NetworkError(errorMessage: "check your internet connection"));
   }
+}
+//https://ecommerce.routemisr.com/api/v1/cart
+Future<Either<Failures,CartScreenResponseModel>> cartProducts()async{
+    Uri url=Uri.https("ecommerce.routemisr.com","/api/v1/cart");
+    var shared= await SharedPreference.init();
+    var token=SharedPreference.getData(key: 'Token');
+    var response= await http.get(url,headers: {
+      'token':token.toString()
+    });
+    var json= jsonDecode(response.body);
+    var cartScreenResponseModel=CartScreenResponseModel.fromJson(json);
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult != ConnectivityResult.mobile ||
+        connectivityResult != ConnectivityResult.wifi) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        print(response.body);
+        return right(cartScreenResponseModel);
+
+      }else{
+        return left( ServerError(errorMessage: cartScreenResponseModel.message));
+      }
+
+    }else return left(NetworkError(errorMessage: cartScreenResponseModel.message));
+
+
 }
 }
