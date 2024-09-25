@@ -61,12 +61,11 @@ class CartScreen extends StatelessWidget {
                 Expanded(
                   child: ListView.builder(
                     itemBuilder: (context, index) {
-                      return CartItem(cartProduct: cartViewModel.products!.products![index] ,itemRemoved:()=> removedItem(cartViewModel.products!.products![index].product!.id ?? "")
-                        ,addCount:()=> cartViewModel.updateCartItemCount(cartViewModel.products!.products![index].product!.id ?? "", cartViewModel.products!.products![index].count!.toInt() +1) ,
-                        decrementCount:()=>cartViewModel.updateCartItemCount(cartViewModel.products!.products![index].product!.id ?? "",cartViewModel.products!.products![index].count!.toInt()>0? cartViewModel.products!.products![index].count!.toInt() -1:0
-                        )
-
-                        ,);
+                      return CartItem(cartProduct: cartViewModel.products!.products![index] ,
+                        cartViewModel: cartViewModel,
+                        id:cartViewModel.products!.products![index].product!.id ?? "",
+                        count: cartViewModel.products!.products![index].count!.toInt(),
+                      );
                     },
                     itemCount: cartViewModel.products!.products!.length,
                   ),
@@ -137,8 +136,8 @@ class CartScreen extends StatelessWidget {
 
     );
   }
-  void removedItem(String productId){
-    print("Removing product with ID: $productId");
-    cartViewModel.removeFromCart(productId);
-  }
+  // void removedItem(String productId){
+  //   print("Removing product with ID: $productId");
+  //   cartViewModel.removeFromCart(productId);
+  // }
 }
