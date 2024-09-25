@@ -1,12 +1,15 @@
+import 'package:e_commerce/ui/state_manegment/home/favourite_tap/favourite_tap_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../domain/entity/product_tap/product_entity.dart';
 import '../../../../utils/app_color.dart';
 
 class WishListItem extends StatelessWidget {
-  WishListItem();
-
+  WishListItem({required this.wishListItem,required this.favouriteTapViewModel});
+  DataEntity wishListItem;
+  FavouriteTapViewModel favouriteTapViewModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,7 +28,7 @@ class WishListItem extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.r),
             ),
-            child: Image.network(
+            child: Image.network(wishListItem.imageCover??
                 "https://ecommerce.routemisr.com/Route-Academy-brands/1678285758109.png",
                 fit: BoxFit.fill),
           ),
@@ -42,7 +45,7 @@ class WishListItem extends StatelessWidget {
                       children: [
                         Expanded(
                           flex: 3,
-                          child: Text("title",
+                          child: Text(wishListItem.title??"title",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
@@ -54,7 +57,14 @@ class WishListItem extends StatelessWidget {
                         ),
                         Expanded(
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              if(wishListItem!=null){
+                                favouriteTapViewModel.removeFromWishList(wishListItem!.id??"");
+
+                              }
+
+
+                            },
                             child: Icon(
                               Icons.favorite,
                               color: AppColors.primaryColor,
@@ -68,7 +78,7 @@ class WishListItem extends StatelessWidget {
                     padding: EdgeInsets.only(top: 13.h, bottom: 13.h),
                     child: Row(
                       children: [
-                        Text('Count: ',
+                        Text('Sold: ${wishListItem.sold}',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
@@ -82,7 +92,7 @@ class WishListItem extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('EGP ',
+                          Text('EGP ${wishListItem.price}',
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!

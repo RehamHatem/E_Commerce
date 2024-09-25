@@ -8,6 +8,8 @@ import 'package:e_commerce/data/model/response/cart/cart_screen_response_model.d
 import 'package:e_commerce/data/model/response/cart/remove_from_cart_response_model.dart';
 import 'package:e_commerce/data/model/response/cart/update_cart_item_count_response_model.dart';
 import 'package:e_commerce/data/model/response/favourite_tap/add_product_to_wish_list_response_model.dart';
+import 'package:e_commerce/data/model/response/favourite_tap/get_wish_list_response_model.dart';
+import 'package:e_commerce/data/model/response/favourite_tap/remove_from_wish_list_response_model.dart';
 import 'package:e_commerce/data/model/response/home_tap/brands_response_model.dart';
 import 'package:e_commerce/data/model/response/home_tap/category_response_model.dart';
 import 'package:e_commerce/data/model/response/product_tap/add_to_cart_response_model.dart';
@@ -295,5 +297,55 @@ Future<Either<Failures,AddProductToWishListResponseModel>>addProductToWishList(S
       return left(NetworkError(errorMessage: "please check your internet connection"));
     }
 
+}
+//https://ecommerce.routemisr.com/api/v1/wishlist
+Future<Either<Failures,GetWishListResponseModel>>getWishList()async{
+    Uri url=Uri.https("ecommerce.routemisr.com","/api/v1/wishlist");
+    var shared = await SharedPreference.init();
+    var token = SharedPreference.getData(key: 'Token');
+    var response= await http.get(url,headers: {
+      'token':token.toString()
+    });
+    var json=jsonDecode(response.body);
+    var wishList=GetWishListResponseModel.fromJson(json);
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult != ConnectivityResult.mobile ||
+        connectivityResult != ConnectivityResult.wifi) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return right(wishList);
+
+      }
+      else{
+        return left(ServerError(errorMessage: wishList.message));
+      }
+    }else {
+      return left(NetworkError(errorMessage: "please check your internet connection"));
+    }
+}
+
+//https://ecommerce.routemisr.com/api/v1/wishlist/6428ebc6dc1175abc65ca0b9
+
+Future<Either<Failures,RemoveFromWishListResponseModel>>removeFromWishList(String productId)async{
+    Uri url=Uri.https("ecommerce.routemisr.com","/api/v1/wishlist/${productId}");
+    var shared = await SharedPreference.init();
+    var token = SharedPreference.getData(key: 'Token');
+    var response= await http.delete(url,headers: {
+      'token':token.toString()
+    });
+    var json= jsonDecode(response.body);
+    var remove=RemoveFromWishListResponseModel.fromJson(json);
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult != ConnectivityResult.mobile ||
+        connectivityResult != ConnectivityResult.wifi) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return right(remove);
+
+      }
+      else{
+        return left(ServerError(errorMessage: remove.message));
+      }
+    }else {
+      return left(NetworkError(errorMessage: "please check your internet connection"));
+    }
 }
 }
