@@ -8,11 +8,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../utils/app_color.dart';
 import '../../../../utils/my_assets.dart';
 
-class GridViewCardItem extends StatelessWidget {
-  bool isWishlisted = false;
+class GridViewCardItem extends StatefulWidget {
  DataEntity dataEntity;
+  ProductTapViewModel productTapViewModel;
 
- GridViewCardItem({required this.dataEntity});
+
+ GridViewCardItem({required this.dataEntity,required this.productTapViewModel,});
+
+  @override
+  State<GridViewCardItem> createState() => _GridViewCardItemState();
+}
+
+class _GridViewCardItemState extends State<GridViewCardItem> {
+  bool isWishlisted = false;
+
   //todo: product
   @override
   Widget build(BuildContext context) {
@@ -35,7 +44,7 @@ class GridViewCardItem extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.r),
                 child: Image.network(
-                  dataEntity.imageCover??"",
+                  widget.dataEntity.imageCover??"",
                   fit: BoxFit.fill,
                   width: 191.w,
                   height: 128.h,
@@ -50,7 +59,13 @@ class GridViewCardItem extends StatelessWidget {
                   child: IconButton(
                     color: AppColors.primaryColor,
                     padding: EdgeInsets.zero,
-                    onPressed: () {},
+                    onPressed: () {
+
+                      setState(() {
+                        isWishlisted=true;
+                        widget.productTapViewModel.addToWishList(widget.dataEntity.id??"");
+                      });
+                    },
                     icon: isWishlisted == true
                         ? const Icon(Icons.favorite_rounded)
                         : const Icon(
@@ -67,7 +82,7 @@ class GridViewCardItem extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 8.w),
             child: Text(
-              dataEntity.title??"",
+              widget.dataEntity.title??"",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -85,7 +100,7 @@ class GridViewCardItem extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  dataEntity.price.toString()+" EGP",
+                  widget.dataEntity.price.toString()+" EGP",
                   maxLines: 1,
 
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -108,7 +123,7 @@ class GridViewCardItem extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                 "Review "+ dataEntity.ratingsAverage.toString()??"",
+                 "Review "+ widget.dataEntity.ratingsAverage.toString()??"",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -126,7 +141,7 @@ class GridViewCardItem extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    bloc.addToCart(dataEntity.id??"");
+                    bloc.addToCart(widget.dataEntity.id??"");
                     },
                   splashColor: Colors.transparent,
                   child: Icon(

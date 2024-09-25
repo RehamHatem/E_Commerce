@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../data/di.dart';
 import '../../../utils/app_color.dart';
+import '../product_tap/widgets/product_details_view.dart';
 
 class CartScreen extends StatelessWidget {
   static const String routeName = 'cart-screen';

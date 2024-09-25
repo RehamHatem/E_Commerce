@@ -30,5 +30,15 @@ class ProductTapViewModel extends Cubit<ProductTapStates>{
       print(cartCount);
     },);
   }
+  void addToWishList(String productId)async{
+    emit(AddToWishListLoadingState(load: "loading"));
+    var either= await productTapUseCases.addToWishList(productId);
+    return either.fold((l) {
+      emit(AddToWishListErrorState(error: l));
+    }, (r) {
+      emit(AddToWishListSuccessState(addProductToWishListEntity: r));
+    },);
+
+  }
 
 }

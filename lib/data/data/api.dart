@@ -7,6 +7,7 @@ import 'package:e_commerce/data/model/response/auth/Register_response_model.dart
 import 'package:e_commerce/data/model/response/cart/cart_screen_response_model.dart';
 import 'package:e_commerce/data/model/response/cart/remove_from_cart_response_model.dart';
 import 'package:e_commerce/data/model/response/cart/update_cart_item_count_response_model.dart';
+import 'package:e_commerce/data/model/response/favourite_tap/add_product_to_wish_list_response_model.dart';
 import 'package:e_commerce/data/model/response/home_tap/brands_response_model.dart';
 import 'package:e_commerce/data/model/response/home_tap/category_response_model.dart';
 import 'package:e_commerce/data/model/response/product_tap/add_to_cart_response_model.dart';
@@ -259,6 +260,36 @@ Future<Either<Failures,UpdateCartItemCountResponseModel>>updateCartItemCount(Str
       }
       else{
         return left(ServerError(errorMessage: updateCartItemCountResponseModel.message));
+      }
+    }else {
+      return left(NetworkError(errorMessage: "please check your internet connection"));
+    }
+
+}
+
+
+//https://ecommerce.routemisr.com/api/v1/wishlist
+
+Future<Either<Failures,AddProductToWishListResponseModel>>addProductToWishList(String productId)async{
+    Uri url= Uri.https("ecommerce.routemisr.com","/api/v1/wishlist");
+    var shared = await SharedPreference.init();
+    var token = SharedPreference.getData(key: 'Token');
+    var response=await http.post(url,body: {
+      'productId':productId
+    },headers: {
+      'token':token.toString()
+    });
+    var json=jsonDecode(response.body);
+    var addProductToWishList=AddProductToWishListResponseModel.fromJson(json);
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult != ConnectivityResult.mobile ||
+        connectivityResult != ConnectivityResult.wifi) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        print (response.body);
+        return right(addProductToWishList);
+      }
+      else{
+        return left(ServerError(errorMessage: addProductToWishList.message));
       }
     }else {
       return left(NetworkError(errorMessage: "please check your internet connection"));

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:readmore/readmore.dart';
 
 
+import '../../../../../../domain/entity/cart/cart_entity.dart';
 import '../../../../../../domain/entity/product_tap/product_entity.dart';
 import '../../../../utils/app_color.dart';
 import '../../../../utils/my_assets.dart';
@@ -15,6 +16,9 @@ class ProductDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var product=ModalRoute.of(context)!.settings.arguments as DataEntity;
+
+
+
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
@@ -60,6 +64,7 @@ class ProductDetailsView extends StatelessWidget {
                       indicatorBottomPadding: 20.h,
                       autoPlayInterval: 3000,
                       isLoop: true,
+
                       children: product.images!.map((e) {
                           return Image.network(
                             e,

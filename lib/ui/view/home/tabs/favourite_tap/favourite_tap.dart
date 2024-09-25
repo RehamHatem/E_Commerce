@@ -1,3 +1,4 @@
+import 'package:e_commerce/ui/view/home/tabs/favourite_tap/widgets/wish_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -31,6 +32,13 @@ class FavouriteTap extends StatelessWidget {
                 SizedBox(
                   height: 24.h,
                 ),
+                Expanded(child: ListView.builder(itemBuilder:
+
+                    (context, index) {
+
+                  return WishListItem();
+                },itemCount: 10,))
+
               ]),
         ));
   }

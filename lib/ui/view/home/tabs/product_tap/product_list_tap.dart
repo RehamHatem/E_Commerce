@@ -85,7 +85,7 @@ class ProductListTap extends StatelessWidget {
                                 arguments: productTapViewModel.products[index]
                               );
                             },
-                            child: GridViewCardItem(dataEntity: productTapViewModel.products[index]),
+                            child: GridViewCardItem(dataEntity: productTapViewModel.products[index],productTapViewModel: productTapViewModel,),
                           );
                         },
                       ),

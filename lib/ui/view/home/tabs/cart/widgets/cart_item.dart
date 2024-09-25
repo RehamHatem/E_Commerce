@@ -7,9 +7,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../state_manegment/cart/cart_view_model.dart';
 import '../../../../utils/app_color.dart';
+import '../../product_tap/widgets/product_details_view.dart';
 
 
-class CartItem extends StatefulWidget {
+class CartItem extends StatelessWidget {
   CartProductsEntity cartProduct;
 
     // Function() itemRemoved ;
@@ -18,28 +19,30 @@ class CartItem extends StatefulWidget {
   String id;
   int count;
 
+
   CartItem({required this.cartProduct,required this.cartViewModel,required this.id,required this.count});
   CartViewModel cartViewModel ;
 
-  @override
-  State<CartItem> createState() => _CartItemState();
-}
-
-class _CartItemState extends State<CartItem> {
   removeItem(String id){
     print("Removing product with ID: $id");
-    widget.cartViewModel.removeFromCart(id);
+    // if(count==1){
+      cartViewModel.removeFromCart(id);
+    // }
+    // else if (count>1){
+    //   decreaseCount(id , count);
+    // }
+
 
   }
 
   addCount(String id,int count){
-    widget.cartViewModel.updateCartItemCount(id, count+1);
+    cartViewModel.updateCartItemCount(id, count+1);
 
   }
 
   decreaseCount(String id,int count){
     if(count >0){
-      widget.cartViewModel.updateCartItemCount(id, count-1);
+      cartViewModel.updateCartItemCount(id, count-1);
     }
     else{
       removeItem(id);
@@ -49,7 +52,7 @@ class _CartItemState extends State<CartItem> {
 
   @override
   Widget build(BuildContext context) {
-    if(widget.cartProduct.product==null){
+    if(cartProduct.product==null){
       return Container(
         height:100,width:100,color: Colors.yellow,);
     }
@@ -71,7 +74,7 @@ class _CartItemState extends State<CartItem> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.r),
             ),
-            child: Image.network(widget.cartProduct.product!.imageCover?? "https://ecommerce.routemisr.com/Route-Academy-brands/1678285758109.png", fit: BoxFit.fill),
+            child: Image.network(cartProduct.product!.imageCover?? "https://ecommerce.routemisr.com/Route-Academy-brands/1678285758109.png", fit: BoxFit.fill),
           ),
 
           Expanded(
@@ -87,7 +90,7 @@ class _CartItemState extends State<CartItem> {
                           children: [
                             Expanded(
                               flex:3,
-                              child: Text(widget.cartProduct.product!.title??"title",
+                              child: Text(cartProduct.product!.title??"title",
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
 
@@ -101,11 +104,7 @@ class _CartItemState extends State<CartItem> {
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  removeItem(widget.id);
-                                  setState(() {
-
-                                  });
-
+                                  removeItem(id);
                                 },
                                 child: Icon(
                                   Icons.delete_outline,
@@ -120,7 +119,7 @@ class _CartItemState extends State<CartItem> {
                         padding: EdgeInsets.only(top: 13.h, bottom: 13.h),
                         child: Row(
                           children: [
-                            Text('Count: ${widget.cartProduct.count}',
+                            Text('Count: ${cartProduct.count}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium!
@@ -134,7 +133,7 @@ class _CartItemState extends State<CartItem> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('EGP ${widget.cartProduct.price}',
+                              Text('EGP ${cartProduct.price}',
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleMedium!
@@ -158,10 +157,8 @@ class _CartItemState extends State<CartItem> {
                                         // if(cartProduct.count!=null  && cartProduct.count! > 1){
                                         //   cartProduct.count=cartProduct.count!-1;
                                         // }
-                                        decreaseCount(widget.id,widget.count);
-                                        setState(() {
+                                        decreaseCount(id,count);
 
-                                        });
 
                                       },
                                       icon: Icon(
@@ -171,7 +168,7 @@ class _CartItemState extends State<CartItem> {
                                       ),
                                     ),
                                     Text(
-                                      widget.cartProduct.count.toString(),
+                                      cartProduct.count.toString(),
                                       style: TextStyle(
                                           fontSize: 18.sp,
                                           fontWeight: FontWeight.w500,
@@ -184,10 +181,8 @@ class _CartItemState extends State<CartItem> {
                                         // if(cartProduct.count!=null){
                                         //   cartProduct.count=cartProduct.count!+1;
                                         // }
-                                        addCount(widget.id,widget.count);
-                                        setState(() {
+                                        addCount(id,count);
 
-                                        });
 
                                       },
                                       icon: Icon(

@@ -1,6 +1,7 @@
 import 'package:e_commerce/domain/entity/product_tap/add_to_cart_entity.dart';
 
 import '../../../data/model/response/product_tap/prosuct_response_model.dart';
+import '../product_tap/product_entity.dart';
 
 class CartEntity {
   CartEntity({
